@@ -1,12 +1,14 @@
-package {
+package study_agal {
 import flash.display3D.Context3DProgramType;
 import flash.display3D.Context3DTriangleFace;
 import flash.display3D.Context3DVertexBufferFormat;
 
+import study_agal.Main3D;
+
 /**
      * @author Pierre Chamberlain
      */
-public class Test_2D extends Main3D {
+public class Test_ChangeBrightnessByMouse extends Main3D {
 
     private var brightness:Vector.<Number>;
 

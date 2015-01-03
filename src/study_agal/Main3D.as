@@ -1,4 +1,4 @@
-package  {
+package study_agal  {
 import com.adobe.utils.AGALMiniAssembler;
 import flash.display.Sprite;
 import flash.display.Stage3D;

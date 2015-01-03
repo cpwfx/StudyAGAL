@@ -7,6 +7,8 @@ import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
+import study_agal.Test_ChangeBrightnessByMouse;
+
 [SWF(frameRate=60,width=640,height=480,backgroundColor=0x333333)]
 public class StudyAGAL extends Sprite {
 
@@ -14,20 +16,20 @@ public class StudyAGAL extends Sprite {
 
     public function StudyAGAL()
     {
-        _createButton("basic agal test", Test_2D);
+        _createButton("Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
     }
 
     private function _createButton(str:String,clazz:Class):void
     {
         var tf:TextField = new TextField();
-        tf.width = 200;
+        tf.width = 600;
         tf.height = 20;
         tf.border = true;
         tf.borderColor = 0xeeeeee;
         tf.background = true;
         tf.backgroundColor = 0x999999;
         tf.selectable = false;
-        tf.x = 10;
+        tf.x = 20;
         tf.y = height + 20;
         tf.defaultTextFormat = new TextFormat("_sans", 12, 0xffffff, false, false, false, null, null, TextFormatAlign.CENTER);
         tf.text = str;
