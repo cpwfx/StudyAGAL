@@ -7,9 +7,6 @@ import flash.geom.Vector3D;
 
 import study_agal.Main3D;
 
-/**
-     * @author Pierre Chamberlain
-     */
 public class Test_Mine_RotateTriangle extends Main3D {
 
     private var rotationMat:Matrix3D = new Matrix3D();
