@@ -5,7 +5,9 @@ import flash.display.Stage3D;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.display3D.Context3D;
+import flash.display3D.Context3DProfile;
 import flash.display3D.Context3DProgramType;
+import flash.display3D.Context3DRenderMode;
 import flash.display3D.Context3DTriangleFace;
 import flash.display3D.IndexBuffer3D;
 import flash.display3D.Program3D;
@@ -52,7 +54,7 @@ public class Main3D extends Sprite {
     private function prepareStage3D():void {
         _stage3D =  stage.stage3Ds[0];
         _stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
-        _stage3D.requestContext3D();
+        _stage3D.requestContext3D(Context3DRenderMode.AUTO, Context3DProfile.STANDARD);
     }
 
     private function onContextCreated(e:Event):void {
