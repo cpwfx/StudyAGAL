@@ -33,7 +33,6 @@ public class Main3D extends Sprite {
     protected var _indexDataBuffer:IndexBuffer3D;
     protected var _vertexBuffer:VertexBuffer3D;
 
-
     public function Main3D() {
         super();
 
@@ -107,13 +106,6 @@ public class Main3D extends Sprite {
         addChild(field);
     }
 
-    public function createProgram(pVertexSrc:String, pFragmentSrc:String):Program3D {
-        var program:Program3D = _context3D.createProgram();
-        program.upload(assembleVertex(pVertexSrc), assembleFragment(pFragmentSrc));
-
-        return program;
-    }
-
     public function get program():Program3D { return _program; }
     public function set program(value:Program3D):void {
         _program = value;
@@ -121,17 +113,10 @@ public class Main3D extends Sprite {
         _context3D.setProgram(_program);
     }
 
-    private function assemble(pString:String, pKind:String):ByteArray {
-        var agal:AGALMiniAssembler =    new AGALMiniAssembler();
-        return agal.assemble(pKind, pString.replace(/\|/g,"\n"));
-    }
-
-    public function assembleVertex(pSource:String):ByteArray {
-        return assemble(pSource, Context3DProgramType.VERTEX);
-    }
-
-    public function assembleFragment(pSource:String):ByteArray {
-        return assemble(pSource, Context3DProgramType.FRAGMENT);
+    public function createProgram(vertexsrc:String, fragmentsrc:String, version:uint=1, debuggingAssembler:Boolean=false, verbose:Boolean=false):Program3D {
+        var agal:AGALMiniAssembler = new AGALMiniAssembler(debuggingAssembler);
+        agal.verbose = verbose;
+        return agal.assemble2(_context3D, version, vertexsrc.replace(/\|/g,"\n"), fragmentsrc.replace(/\|/g,"\n"));
     }
 
     public function get backgroundColor():uint {

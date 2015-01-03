@@ -26,7 +26,7 @@ public class Test_ChangeBrightnessByMouse extends Main3D {
                 "mul v0, vc0, va1";
 
         //Set the current program:
-        program =   createProgram(agal_vertex, "mov oc, v0");
+        program =  createProgram(agal_vertex, "mov oc, v0", 2 , true, true);
 
         setVertexData( 6, new <Number>[
             //Coordinates & Colors
