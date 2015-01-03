@@ -39,7 +39,6 @@ public class Test_Mine_RotateTriangle extends Main3D {
         ]);
 
         indexData = new <uint>[
-            //Draw two triangles (a square)
             2,1,0
         ];
 
