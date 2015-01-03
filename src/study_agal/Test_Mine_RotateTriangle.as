@@ -30,7 +30,7 @@ public class Test_Mine_RotateTriangle extends Main3D {
                 //そのまま出力
                 "mov oc, v0";
 
-        program =   createProgram(agal_vertex, agal_fragment);
+        program =   createProgram(agal_vertex, agal_fragment, 1 , true, true);
 
         setVertexData( 6, new <Number>[
             //Coordinates & Colors
