@@ -9,7 +9,7 @@ import flash.text.TextFormatAlign;
 import study_agal.Test_ChangeBrightnessByMouse;
 import study_agal.Test_Mine_RotateTriangle;
 
-[SWF(frameRate=60,width=640,height=480,backgroundColor=0x333333)]
+[SWF(frameRate=60,width=480,height=360,backgroundColor=0x333333)]
 public class StudyAGAL extends Sprite {
 
     private static const SHADOW:DropShadowFilter = new DropShadowFilter(4.0, 45, 0x000000, 0.3);
@@ -34,7 +34,7 @@ public class StudyAGAL extends Sprite {
         _testLookup[id] = clazz;
 
         var tf:TextField = new TextField();
-        tf.width = 600;
+        tf.width = 440;
         tf.height = 20;
         tf.border = true;
         tf.borderColor = 0xeeeeee;
