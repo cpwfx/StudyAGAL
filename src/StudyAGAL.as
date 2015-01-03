@@ -1,5 +1,4 @@
 package {
-import flash.display.SimpleButton;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
@@ -19,10 +18,11 @@ public class StudyAGAL extends Sprite {
 
     public function StudyAGAL()
     {
-        _createButton("test1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
-        _createButton("mytest1","MyTest RotateTriangle", Test_Mine_RotateTriangle);
+        _createButton("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
+        _createButton("test1","MyTest RotateTriangle", Test_Mine_RotateTriangle);
 
-        var autotestId:String = loaderInfo.parameters["autotest"] || "mytest1";
+        var autotestId:String = loaderInfo.parameters["autotest"];
+        trace("autotestId",autotestId);
         if(autotestId)
         {
             _startTest(autotestId);

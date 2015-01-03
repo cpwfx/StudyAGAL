@@ -47,7 +47,11 @@
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
             params.wmode = "direct";
-            //params.flashvars = "autotest=mytest1";
+            var fvars = location.href.split("?")[1];
+            if(fvars && fvars.length > 0)
+            {
+                params.flashvars = "autotest=" + fvars;
+            }
             var attributes = {};
             attributes.id = "${application}";
             attributes.name = "${application}";
