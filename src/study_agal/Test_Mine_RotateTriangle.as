@@ -9,7 +9,8 @@ import study_agal.Main3D;
 
 public class Test_Mine_RotateTriangle extends Main3D {
 
-    private var rotationMat:Matrix3D = new Matrix3D();
+    private const rotationMat:Matrix3D = new Matrix3D();
+    private const rotationAxis:Vector3D = new Vector3D(0,0,1);
 
     protected override function main():void {
         super.main();
@@ -55,7 +56,7 @@ public class Test_Mine_RotateTriangle extends Main3D {
         var ratio1:Number =  stage.mouseX / viewWidth;
         var ratio2:Number =  stage.mouseY / viewHeight;
 
-        rotationMat.appendRotation(0.1 + 4 * (ratio1 + ratio2), new Vector3D(0,0,1));
+        rotationMat.appendRotation(0.1 + 4 * (ratio1 + ratio2), rotationAxis);
 
         context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotationMat);
         context3D.drawTriangles(_indexDataBuffer);
