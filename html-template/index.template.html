@@ -22,7 +22,7 @@
         -->
         <style type="text/css" media="screen"> 
             html, body  { height:100%; }
-            body { margin:0; padding:0; overflow:auto; text-align:center; 
+            body { margin:10px; padding:0; overflow:auto; text-align:center;
                    background-color: ${bgcolor}; }   
             object:focus { outline:none; }
             #flashContent { display:none; }
@@ -47,6 +47,7 @@
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
             params.wmode = "direct";
+            //params.flashvars = "autotest=mytest1";
             var attributes = {};
             attributes.id = "${application}";
             attributes.name = "${application}";
