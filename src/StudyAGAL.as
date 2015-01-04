@@ -1,11 +1,13 @@
 package {
 import flash.display.Sprite;
 import flash.events.MouseEvent;
+import flash.events.UncaughtErrorEvent;
 import flash.filters.DropShadowFilter;
 import flash.text.TextField;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
+import flash.utils.setTimeout;
 
 import study_agal.Main3D;
 
@@ -39,6 +41,12 @@ public class StudyAGAL extends Sprite {
         {
             _startTest(autotestId);
         }
+
+        loaderInfo.uncaughtErrorEvents.addEventListener(
+                UncaughtErrorEvent.UNCAUGHT_ERROR, function(e:UncaughtErrorEvent):void{
+                    _showError(e.text);
+                }
+        );
     }
 
     private function _createButton(id:String, str:String,clazz:Class, props:Object = null):void
@@ -80,6 +88,17 @@ public class StudyAGAL extends Sprite {
         {
             _clearDisplayObject();
             try {
+                var tf:TextField = _createTf(clazz+"");
+                tf.x = 5;
+                tf.y = 5;
+                addChild(tf);
+                setTimeout(function():void{
+                    if(tf && tf.parent)
+                    {
+                        tf.parent.removeChild(tf);
+                    }
+                },3000)
+
                 var content:Main3D = new clazz() as Main3D;
                 content.backgroundColor = 0x555555;
                 for (var key:String in props) {
@@ -89,14 +108,19 @@ public class StudyAGAL extends Sprite {
             }
             catch (e:Error)
             {
-                var tf:TextField = _createTf(e.message);
-                tf.x = 20;
-                tf.y = getBounds(this).bottom + 10;
-                addChild(tf);
+                _showError(e.message);
             }
         }
     }
 
+    private function _showError(mes:String):void
+    {
+        _clearDisplayObject();
+        var tf:TextField = _createTf(mes);
+        tf.x = 20;
+        tf.y = getBounds(this).bottom + 10;
+        addChild(tf);
+    }
 
     private function _clearDisplayObject():void
     {

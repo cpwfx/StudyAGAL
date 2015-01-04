@@ -56,7 +56,7 @@ public class Main3D extends Sprite {
     private function prepareStage3D():void {
         _stage3D =  stage.stage3Ds[0];
         _stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
-        _stage3D.requestContext3D(Context3DRenderMode.AUTO, Context3DProfile.STANDARD);
+        _stage3D.requestContext3D(Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
     }
 
     private function onContextCreated(e:Event):void {

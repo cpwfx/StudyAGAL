@@ -41,14 +41,12 @@
             attributes.id = "${application}";
             attributes.name = "${application}";
             attributes.align = "middle";
-            setTimeout(function(){
-                swfobject.embedSWF(
-                        "${swf}.swf", "flashContent",
-                        "${width}", "${height}",
-                        swfVersionStr, '',
-                        flashvars, params, attributes);
-                swfobject.createCSS("#flashContent", "display:block;text-align:left;");
-            },1000)
+            swfobject.embedSWF(
+                    "${swf}.swf", "flashContent",
+                    "${width}", "${height}",
+                    swfVersionStr, '',
+                    flashvars, params, attributes);
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 
         </script>
 
