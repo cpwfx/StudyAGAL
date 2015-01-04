@@ -34,7 +34,7 @@ public class StudyAGAL extends Sprite {
         }
     }
 
-    private function _createButton(id:String, str:String,clazz:Class, props:Object = {}):void
+    private function _createButton(id:String, str:String,clazz:Class, props:Object = null):void
     {
         _testLookup[id] = clazz;
         _propsLookup[id] = props;
