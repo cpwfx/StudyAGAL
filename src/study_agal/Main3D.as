@@ -151,6 +151,11 @@ public class Main3D extends Sprite {
         _vertexBuffer.uploadFromVector(_vertexData, 0, numOfVertices);
     }
 
+    public function getVertexData():Vector.<Number>
+    {
+        return _vertexData;
+    }
+
     public function get numOfIndexes():int {
         return !_indexData ? 0 : _indexData.length / 3;
     }
