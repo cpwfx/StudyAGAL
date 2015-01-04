@@ -11,6 +11,7 @@ import study_agal.Main3D;
 import study_agal.Test_ChangeBrightnessByMouse;
 import study_agal.Test_Mine_RotateManyTriangles;
 import study_agal.Test_Mine_RotateManyTrianglesEach;
+import study_agal.Test_Mine_RotateManyTrianglesEachPosterization;
 import study_agal.Test_Mine_RotateTriangle;
 
 [SWF(frameRate=60,width=480,height=360,backgroundColor=0x333333)]
@@ -27,7 +28,7 @@ public class StudyAGAL extends Sprite {
         _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
         _createButton("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
         _createButton("test3_2","Rotate Many Triangles Each", Test_Mine_RotateManyTrianglesEach);
-
+        _createButton("test3_3","Rotate Many Posterized Triangles Each", Test_Mine_RotateManyTrianglesEachPosterization);
 
         var autotestId:String = loaderInfo.parameters["autotest"];
         trace("autotestId",autotestId);
@@ -70,7 +71,7 @@ public class StudyAGAL extends Sprite {
         {
             _clearDisplayObject();
             var content:Main3D = new clazz() as Main3D;
-            content.backgroundColor = 0x111111;
+            content.backgroundColor = 0x555555;
             for (var key:String in props)
             {
                 content.properties[key] = props[key];
