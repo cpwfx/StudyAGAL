@@ -6,7 +6,10 @@ import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
+import study_agal.Main3D;
+
 import study_agal.Test_ChangeBrightnessByMouse;
+import study_agal.Test_Mine_RotateManyTriangles;
 import study_agal.Test_Mine_RotateTriangle;
 
 [SWF(frameRate=60,width=480,height=360,backgroundColor=0x333333)]
@@ -19,7 +22,9 @@ public class StudyAGAL extends Sprite {
     public function StudyAGAL()
     {
         _createButton("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
-        _createButton("test1","MyTest RotateTriangle", Test_Mine_RotateTriangle);
+        _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);
+        _createButton("test2","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
+
 
         var autotestId:String = loaderInfo.parameters["autotest"];
         trace("autotestId",autotestId);
@@ -59,7 +64,9 @@ public class StudyAGAL extends Sprite {
         if(clazz)
         {
             _clearDisplayObject();
-            addChild(new clazz());
+            var content:Main3D = new clazz() as Main3D;
+            content.backgroundColor = 0x111111;
+            addChild(content);
         }
     }
 
