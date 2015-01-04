@@ -25,22 +25,21 @@ public class Test_Mine_RotateManyTrianglesEachPosterization extends Main3D {
         P1.x = viewWidth >> 1;
         P1.y = viewHeight >> 1;
 
-        var agal_vertex:String =
+        var agal_vertex:String = [
                 //回転行列を座標に掛け合わせる
-                "m44 vt0, va0, vc0|" +
+                "m44 vt0, va0, vc0",
                 //射影変換して出力
-                "m44 op, vt0, vc4|" +
+                "m44 op, vt0, vc4|",
                 //カラーはそのまま受けわたす
-                "mov v0, va1";
+                "mov v0, va1"].join("\n");
 
-        var agal_fragment:String =
-                //そのまま出力
-                "mov ft0, v0\n"+
-                "mul ft0.xyz, ft0, fc0.xxx\n"+
-                "frc ft1, ft0\n"+
-                "sub ft0.xyz, ft0, ft1\n"+
-                "div ft0.xyz, ft0, fc0.yyy\n"+
-                "sat oc, ft0"
+        var agal_fragment:String = [
+            "mov ft0, v0",
+            "mul ft0.xyz, ft0, fc0.xxx",
+            "frc ft1, ft0",
+            "sub ft0.xyz, ft0, ft1",
+            "div ft0.xyz, ft0, fc0.yyy",
+            "sat oc, ft0"].join("\n");
 
         program =   createProgram(agal_vertex, agal_fragment, 1 , true, false);
 
