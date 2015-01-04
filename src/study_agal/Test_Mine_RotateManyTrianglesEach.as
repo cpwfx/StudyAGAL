@@ -39,7 +39,7 @@ public class Test_Mine_RotateManyTrianglesEach extends Main3D {
                 //そのまま出力
                 "mov oc, v0";
 
-        program =   createProgram(agal_vertex, agal_fragment, 2 , true, false);
+        program =   createProgram(agal_vertex, agal_fragment, 1 , true, false);
 
         var vertexes:Vector.<Number> = new <Number>[];
         var indexes:Vector.<uint> = new <uint>[];
