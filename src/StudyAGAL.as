@@ -3,6 +3,7 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 import flash.text.TextField;
+import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
@@ -24,6 +25,8 @@ public class StudyAGAL extends Sprite {
 
     public function StudyAGAL()
     {
+        stage.color = 0x333333;
+
         _createButton("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
         _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
         _createButton("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
@@ -43,24 +46,30 @@ public class StudyAGAL extends Sprite {
         _testLookup[id] = clazz;
         _propsLookup[id] = props;
 
-        var tf:TextField = new TextField();
-        tf.width = 440;
-        tf.height = 20;
+        var tf:TextField = _createTf(str);
+        tf.x = 20;
+        tf.y = getBounds(this).bottom + 10;
         tf.border = true;
         tf.borderColor = 0xeeeeee;
         tf.background = true;
         tf.backgroundColor = 0x999999;
-        tf.selectable = false;
-        tf.x = 20;
-        tf.y = getBounds(this).bottom + 10;
-        tf.defaultTextFormat = new TextFormat("_sans", 12, 0xffffff, false, false, false, null, null, TextFormatAlign.CENTER);
-        tf.text = str;
         tf.filters = [SHADOW];
         addChild(tf);
 
         tf.addEventListener(MouseEvent.CLICK, function(ev:MouseEvent):void{
             _startTest(id);
         });
+    }
+
+    private function _createTf(str:String):TextField
+    {
+        var tf:TextField = new TextField();
+        tf.width = 440;
+        tf.height = 20;
+        tf.selectable = false;
+        tf.defaultTextFormat = new TextFormat("_sans", 12, 0xffffff, false, false, false, null, null, TextFormatAlign.CENTER);
+        tf.text = str;
+        return tf;
     }
 
     private function _startTest(id:String):void
@@ -70,13 +79,21 @@ public class StudyAGAL extends Sprite {
         if(clazz)
         {
             _clearDisplayObject();
-            var content:Main3D = new clazz() as Main3D;
-            content.backgroundColor = 0x555555;
-            for (var key:String in props)
-            {
-                content.properties[key] = props[key];
+            try {
+                var content:Main3D = new clazz() as Main3D;
+                content.backgroundColor = 0x555555;
+                for (var key:String in props) {
+                    content.properties[key] = props[key];
+                }
+                addChild(content);
             }
-            addChild(content);
+            catch (e:Error)
+            {
+                var tf:TextField = _createTf(e.message);
+                tf.x = 20;
+                tf.y = getBounds(this).bottom + 10;
+                addChild(tf);
+            }
         }
     }
 
