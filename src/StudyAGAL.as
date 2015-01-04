@@ -18,6 +18,7 @@ public class StudyAGAL extends Sprite {
     private static const SHADOW:DropShadowFilter = new DropShadowFilter(4.0, 45, 0x000000, 0.3);
 
     private var _testLookup:Object = {};
+    private var _propsLookup:Object = {};
 
     public function StudyAGAL()
     {
@@ -33,9 +34,10 @@ public class StudyAGAL extends Sprite {
         }
     }
 
-    private function _createButton(id:String, str:String,clazz:Class):void
+    private function _createButton(id:String, str:String,clazz:Class, props:Object = {}):void
     {
         _testLookup[id] = clazz;
+        _propsLookup[id] = props;
 
         var tf:TextField = new TextField();
         tf.width = 440;
@@ -60,11 +62,16 @@ public class StudyAGAL extends Sprite {
     private function _startTest(id:String):void
     {
         var clazz:Class = _testLookup[id];
+        var props:Object = _propsLookup[id];
         if(clazz)
         {
             _clearDisplayObject();
             var content:Main3D = new clazz() as Main3D;
             content.backgroundColor = 0x111111;
+            for (var key:String in props)
+            {
+                content.properties[key] = props[key];
+            }
             addChild(content);
         }
     }
