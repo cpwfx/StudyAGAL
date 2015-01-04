@@ -8,7 +8,7 @@ import flash.geom.Vector3D;
 
 import study_agal.Main3D;
 
-public class Test_Mine_RotateManyTrianglesEach extends Main3D {
+public class Test_Mine_RotateManyTrianglesEachPosterization extends Main3D {
 
     private const rotationAxis:Vector3D = new Vector3D(0,0,1);
     private const P1:Point = new Point();
@@ -21,8 +21,6 @@ public class Test_Mine_RotateManyTrianglesEach extends Main3D {
 
     protected override function main():void {
         super.main();
-
-        backgroundColor =   0x444444;
 
         P1.x = viewWidth >> 1;
         P1.y = viewHeight >> 1;
@@ -37,7 +35,12 @@ public class Test_Mine_RotateManyTrianglesEach extends Main3D {
 
         var agal_fragment:String =
                 //そのまま出力
-                "mov oc, v0";
+                "mov ft0, v0\n"+
+                "mul ft0.xyz, ft0, fc0.xxx\n"+
+                "frc ft1, ft0\n"+
+                "sub ft0.xyz, ft0, ft1\n"+
+                "div ft0.xyz, ft0, fc0.yyy\n"+
+                "sat oc, ft0"
 
         program =   createProgram(agal_vertex, agal_fragment, 1 , true, false);
 
@@ -53,9 +56,9 @@ public class Test_Mine_RotateManyTrianglesEach extends Main3D {
             var tri:Triangle = new Triangle(0.2,xx,yy,zz,rot);
             _triangles.push(tri);
             vertexes.push(
-                tri.getVertexAt(0).x, tri.getVertexAt(0).y, tri.getVertexAt(0).z, 1, 0, 1,
-                tri.getVertexAt(1).x, tri.getVertexAt(1).y, tri.getVertexAt(1).z, 1, 1, 0,
-                tri.getVertexAt(2).x, tri.getVertexAt(2).y, tri.getVertexAt(2).z, 0, 1, 1
+                tri.getVertexAt(0).x, tri.getVertexAt(0).y, tri.getVertexAt(0).z, 1, 1, 0,
+                tri.getVertexAt(1).x, tri.getVertexAt(1).y, tri.getVertexAt(1).z, 0, 1, 1,
+                tri.getVertexAt(2).x, tri.getVertexAt(2).y, tri.getVertexAt(2).z, 1, 0, 1
             );
             indexes.push((i*3)+2, (i*3)+1, i*3);
         }
@@ -72,7 +75,7 @@ public class Test_Mine_RotateManyTrianglesEach extends Main3D {
         _projMat.appendScale(viewHeight / viewWidth, 1.0, 1.0);
         context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _projMat);
 
-        context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, new <Number>[8]);
+        context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, new <Number>[properties.step,properties.step-1,0,0]);
 
         addLabel('マウスを動かしてください\n<font size="12">(三角形の回転スピードが変化します)</font>');
     }

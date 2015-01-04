@@ -28,7 +28,7 @@ public class StudyAGAL extends Sprite {
         _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
         _createButton("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
         _createButton("test3_2","Rotate Many Triangles Each", Test_Mine_RotateManyTrianglesEach);
-        _createButton("test3_3","Rotate Many Posterized Triangles Each", Test_Mine_RotateManyTrianglesEachPosterization);
+        _createButton("test3_3","Rotate Many Posterized Triangles Each", Test_Mine_RotateManyTrianglesEachPosterization,{step:4});
 
         var autotestId:String = loaderInfo.parameters["autotest"];
         trace("autotestId",autotestId);
