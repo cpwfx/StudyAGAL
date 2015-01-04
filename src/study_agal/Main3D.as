@@ -1,5 +1,7 @@
 package study_agal  {
 import com.adobe.utils.AGALMiniAssembler;
+
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.display.Stage3D;
 import flash.display.StageAlign;
@@ -36,6 +38,7 @@ public class Main3D extends Sprite {
     protected var _vertexBuffer:VertexBuffer3D;
 
     public var properties:Object = {};
+    private var _loadingLabel:DisplayObject;
 
     public function Main3D() {
         super();
@@ -54,9 +57,13 @@ public class Main3D extends Sprite {
     }
 
     private function prepareStage3D():void {
+        var profile:String = Context3DProfile.BASELINE
+        _loadingLabel = addLabel("requestContext3D.. "+profile);
+
         _stage3D =  stage.stage3Ds[0];
         _stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
-        _stage3D.requestContext3D(Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
+        _stage3D.requestContext3D(Context3DRenderMode.AUTO, profile);
+
     }
 
     private function onContextCreated(e:Event):void {
@@ -68,6 +75,11 @@ public class Main3D extends Sprite {
         _context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 1, false);
         _context3D.setCulling( Context3DTriangleFace.BACK );
 
+        if(_loadingLabel && _loadingLabel.parent)
+        {
+            _loadingLabel.parent.removeChild(_loadingLabel);
+            _loadingLabel = null;
+        }
         main();
 
         addEventListener(Event.ENTER_FRAME, render);
@@ -91,7 +103,7 @@ public class Main3D extends Sprite {
 
     ////////////////////////////////////////////////////////
 
-    public function addLabel(pMessage:String):void {
+    public function addLabel(pMessage:String):TextField {
         var format:TextFormat =     new TextFormat("Courier New", 20, 0xffffff, true);
         format.align =              TextFormatAlign.CENTER;
         var field:TextField =       new TextField();
@@ -108,6 +120,8 @@ public class Main3D extends Sprite {
         field.y =                   (viewHeight - field.height) * .5;
 
         addChild(field);
+
+        return field;
     }
 
     public function get program():Program3D { return _program; }
