@@ -8,7 +8,7 @@ import flash.geom.Vector3D;
 
 import study_agal.Main3D;
 
-public class Test_Mine_RotateTriangle extends Main3D {
+public class Test_Mine_RotateManyTriangles extends Main3D {
 
     private const rotationAxis:Vector3D = new Vector3D(0,0,1);
     private const P1:Point = new Point();
@@ -16,13 +16,11 @@ public class Test_Mine_RotateTriangle extends Main3D {
 
     private var _rotationMat:Matrix3D = new Matrix3D();
     private var _projMat:Matrix3D;
-    private var _updateScalebyMouse:Boolean;
 
     protected override function main():void {
         super.main();
 
         backgroundColor =   0x444444;
-        _updateScalebyMouse = true;
 
         P1.x = viewWidth >> 1;
         P1.y = viewHeight >> 1;
@@ -41,16 +39,29 @@ public class Test_Mine_RotateTriangle extends Main3D {
 
         program =   createProgram(agal_vertex, agal_fragment, 2 , true, false);
 
-        setVertexData( 6, new <Number>[
-            //Coordinates & Colors
-              0 ,  .6, 0,    1, 0, 1,
-            -.6 , -.5, 0,    1, 1, 0,
-             .6 , -.5, 0,    0, 1, 1
-        ]);
+        var vertexes:Vector.<Number> = new <Number>[];
+        var indexes:Vector.<uint> = new <uint>[];
+        const size:Number = 0.3;
+        const w:Number = size * Math.cos(1 * Math.PI /3);
+        const h:Number = size * Math.sin(2 * Math.PI /3);
+        for(var i:int=0;i<32;i++)
+        {
+            //正三角形を描画
+            var xx:Number = (2*Math.random())-1;
+            var yy:Number = (2*Math.random())-1;
+            var zz:Number = Math.random()*0.1;
+            vertexes.push(
+                xx    , yy         , zz, 1, 0, 1,
+                xx - w, yy - h, zz, 1, 1, 0,
+                xx + w, yy - h, zz, 0, 1, 1
+            );
 
-        indexData = new <uint>[
-            2,1,0
-        ];
+            indexes.push((i*3)+2, (i*3)+1, i*3);
+        }
+
+        indexData = indexes;//ここでアップロード
+
+        setVertexData( 6, vertexes);
 
         context3D.setVertexBufferAt(0, _vertexBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
         context3D.setVertexBufferAt(1, _vertexBuffer, 3, Context3DVertexBufferFormat.FLOAT_3);
@@ -77,14 +88,12 @@ public class Test_Mine_RotateTriangle extends Main3D {
             ratio = 1.0;
         }
 
-        _rotationMat.appendRotation(0.1 + 15 * (1.0 - ratio), rotationAxis, null);
+        _rotationMat.appendRotation(0.1 + 15 * (1.0 - ratio), rotationAxis, new Vector3D(0,0,0.5));
 
-        if(_updateScalebyMouse) {
-            ratio = 0.5 + ratio * 0.5;
-            _projMat.identity();
-            _projMat.appendScale(ratio * viewHeight / viewWidth, ratio, ratio);
-            context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _projMat);
-        }
+        ratio = 0.5 + ratio * 0.5;
+        _projMat.identity();
+        _projMat.appendScale(ratio * viewHeight / viewWidth, ratio, ratio);
+        context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _projMat);
 
         context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _rotationMat);
         context3D.drawTriangles(_indexDataBuffer);

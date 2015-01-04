@@ -20,8 +20,8 @@ import flash.text.TextFormatAlign;
 import flash.utils.ByteArray;
 
     /**
-      * @author Pierre Chamberlain
-      */
+     * @author Pierre Chamberlain
+     */
 public class Main3D extends Sprite {
     private var _stage3D:Stage3D;
     private var _context3D:Context3D;
@@ -34,6 +34,8 @@ public class Main3D extends Sprite {
 
     protected var _indexDataBuffer:IndexBuffer3D;
     protected var _vertexBuffer:VertexBuffer3D;
+
+    public var properties:Object = {};
 
     public function Main3D() {
         super();

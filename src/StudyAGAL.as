@@ -22,9 +22,8 @@ public class StudyAGAL extends Sprite {
     public function StudyAGAL()
     {
         _createButton("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
-        _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);
-        _createButton("test2","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
-
+        _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
+        _createButton("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
 
         var autotestId:String = loaderInfo.parameters["autotest"];
         trace("autotestId",autotestId);
