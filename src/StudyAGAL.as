@@ -3,6 +3,7 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.events.UncaughtErrorEvent;
 import flash.filters.DropShadowFilter;
+import flash.filters.GlowFilter;
 import flash.text.TextField;
 import flash.text.TextField;
 import flash.text.TextFormat;
@@ -24,16 +25,17 @@ public class StudyAGAL extends Sprite {
 
     private var _testLookup:Object = {};
     private var _propsLookup:Object = {};
+    private var _titleLookup:Object = {};
 
     public function StudyAGAL()
     {
         stage.color = 0x333333;
 
-        _createButton("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
-        _createButton("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
-        _createButton("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
-        _createButton("test3_2","Rotate Many Triangles Each", Test_Mine_RotateManyTrianglesEach);
-        _createButton("test3_3","Rotate Many Posterized Triangles Each", Test_Mine_RotateManyTrianglesEachPosterization,{step:4});
+        _createTest("p1","Change brightness by mouse (pierrechamberlain blog part1)", Test_ChangeBrightnessByMouse);//http://pierrechamberlain.ca/blog/2011/12/as3-level-4-experimenting-agal-p1/
+        _createTest("test1","Rotate Triangle", Test_Mine_RotateTriangle);//test2でもある
+        _createTest("test3","Rotate Many Triangles", Test_Mine_RotateManyTriangles);
+        _createTestAndButton("test3_2","Rotate Many Triangles Each", Test_Mine_RotateManyTrianglesEach);
+        _createTestAndButton("test3_3","Rotate Many Posterized Triangles Each", Test_Mine_RotateManyTrianglesEachPosterization,{step:4});
 
         var autotestId:String = loaderInfo.parameters["autotest"];
         trace("autotestId",autotestId);
@@ -49,12 +51,18 @@ public class StudyAGAL extends Sprite {
         );
     }
 
-    private function _createButton(id:String, str:String,clazz:Class, props:Object = null):void
+    private function _createTest(id:String, title:String, clazz:Class, props:Object = null):void
     {
+        _titleLookup[id] = title;
         _testLookup[id] = clazz;
         _propsLookup[id] = props;
+    }
+    
+    private function _createTestAndButton(id:String, title:String, clazz:Class, props:Object = null):void
+    {
+        _createTest(id, title, clazz, props);
 
-        var tf:TextField = _createTf(str);
+        var tf:TextField = _createTf(title);
         tf.x = 20;
         tf.y = getBounds(this).bottom + 10;
         tf.border = true;
@@ -69,13 +77,13 @@ public class StudyAGAL extends Sprite {
         });
     }
 
-    private function _createTf(str:String):TextField
+    private function _createTf(str:String,size:int=12,color:uint=0xffffff):TextField
     {
         var tf:TextField = new TextField();
         tf.width = 440;
-        tf.height = 20;
+        tf.height = size * 1.5;
         tf.selectable = false;
-        tf.defaultTextFormat = new TextFormat("_sans", 12, 0xffffff, false, false, false, null, null, TextFormatAlign.CENTER);
+        tf.defaultTextFormat = new TextFormat("_sans", size, color, false, false, false, null, null, TextFormatAlign.CENTER);
         tf.text = str;
         return tf;
     }
@@ -84,20 +92,22 @@ public class StudyAGAL extends Sprite {
     {
         var clazz:Class = _testLookup[id];
         var props:Object = _propsLookup[id];
+        var title:String = _titleLookup[id];
         if(clazz)
         {
             _clearDisplayObject();
             try {
-                var tf:TextField = _createTf(clazz+"");
+                var tf:TextField = _createTf(title ? title : clazz+"", 20, 0xff8811);
                 tf.x = 5;
                 tf.y = 5;
+                tf.filters = [new GlowFilter(0x000000, 1.0, 2.0, 2.0)];
                 addChild(tf);
                 setTimeout(function():void{
                     if(tf && tf.parent)
                     {
                         tf.parent.removeChild(tf);
                     }
-                },3000)
+                },5000)
 
                 var content:Main3D = new clazz() as Main3D;
                 content.backgroundColor = 0x555555;
